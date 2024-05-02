@@ -2,9 +2,10 @@
 	import FileUpload from '$lib/FileUpload.svelte';
 	import Teal from '../lib/Button/Teal.svelte';
 	import Passport from '../lib/Passport.svelte';
+	import '../app.css';
 
 	let src: string;
-	let count = 8;
+	let count = 4;
 
 	const file_to_base64 = (file: File): Promise<string | ArrayBuffer | null> => {
 		return new Promise((resolve, reject) => {
@@ -21,11 +22,11 @@
 	};
 </script>
 
-<FileUpload on:change={async ({ details }) => (src = (await file_to_base64(details[0]) as string))} />
+<FileUpload on:change={async ({ detail }) => src = await file_to_base64(detail[0])} />
 <Teal text="-1" on:click={() => count--} />
 <Teal text="+1" on:click={() => count++} />
 
-<div class="flex flex-wrap space-around w-[148] h-[210]">
+<div class="flex flex-wrap space-around w-[559.370px] h-[793.701px]">
     {#each Array(count) as e}
         <Passport {src} />
     {/each}
