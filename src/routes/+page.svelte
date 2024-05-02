@@ -22,12 +22,16 @@
 	};
 </script>
 
-<FileUpload on:change={async ({ detail }) => src = await file_to_base64(detail[0])} />
-<Teal text="-1" on:click={() => count--} />
-<Teal text="+1" on:click={() => count++} />
+<div class="print:hidden">
+    <FileUpload on:change={async ({ detail }) => src = await file_to_base64(detail[0])} />
+    <Teal text="-1" on:click={() => count--} />
+    <Teal text="+1" on:click={() => count++} />
+</div>
 
 <div class="flex flex-wrap justify-between w-[385.512px] h-[574.488px] items-center bg-slate-500">
     {#each Array(count) as e}
         <Passport {src} />
     {/each}
 </div>
+
+<
