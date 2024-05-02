@@ -26,7 +26,7 @@
 <Teal text="-1" on:click={() => count--} />
 <Teal text="+1" on:click={() => count++} />
 
-<div class="flex flex-wrap space-around w-[559.370px] h-[793.701px]">
+<div class="flex flex-wrap justify-between w-[385.512px] h-[574.488px] items-center bg-slate-500">
     {#each Array(count) as e}
         <Passport {src} />
     {/each}
