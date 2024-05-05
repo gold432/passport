@@ -8,7 +8,7 @@
 
 	// import type { Button as ButtonProps } from 'carbon-components-svelte/types';
 	import { createEventDispatcher } from 'svelte';
-	import Teal from './Button/Teal.svelte';
+	import Button from './Button/Button.svelte';
 
 	const dispatch = createEventDispatcher<{ change: FileList }>();
 
@@ -23,5 +23,5 @@
 	//TODO-icon description
 </script>
 
-<Teal text={label} on:click={() => ref?.click()} />
+<Button text={label} on:click={() => ref?.click()} />
 <input style="display: none;" {multiple} {name} on:change={change} type="file" bind:this={ref} />
