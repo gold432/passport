@@ -10,8 +10,7 @@
 		count = 4,
 		top = 0,
 		left = 0,
-		s = true,
-		fit_w = true,
+		fit_w = false,
 		color = '#c32222',
 		w = 132.283,
 		h = 170.079,
@@ -111,7 +110,7 @@
 						<div style="width: {w}px; height: {h}px" class="flex justify-center items-center">
 							<img
 								alt="passport with removed background"
-								class="w-{fit_w ? 'full' : 'auto'} h-{fit_w ? 'auto' : 'full'}"
+								class="{fit_w ? 'w' : 'h'}-full object-cover"
 								{src}
 							/>
 						</div>
@@ -139,7 +138,7 @@
 			<radiobutton>sf</radiobutton>
 		</radio>
 
-		<label for="s">full width</label>
-		<input type="checkbox" name="s" bind:checked={s} />
+		<label for="fit_w">fit width</label>
+		<input type="checkbox" name="fit_w" bind:checked={fit_w} />
 	</div>
 {/if}
