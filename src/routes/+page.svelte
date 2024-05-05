@@ -11,6 +11,7 @@
 		top = 0,
 		left = 0,
 		s = true,
+		fit_w = true,
 		color = '#c32222',
 		w = 132.283,
 		h = 170.079,
@@ -70,11 +71,11 @@
 				break;
 			case '+':
 			case 'NumpadAdd':
-				w++
+				w++;
 				break;
 			case '-':
 			case 'NumpadSubtract':
-				w--
+				w--;
 				break;
 		}
 	}}
@@ -83,8 +84,7 @@
 <div class="print:hidden">
 	<FileUpload
 		on:change={async ({ detail }) => {
-			src = await file_to_base64(detail[0]);
-			// src = URL.createObjectURL(new Blob([await remove_bg(detail[0])], { type: 'image/png' }));
+			src = URL.createObjectURL(new Blob([await remove_bg(detail[0])], { type: 'image/png' }));
 		}}
 	/>
 
@@ -109,7 +109,11 @@
 				>
 					<div style=" top: {top}px; left: {left}px" class="relative w-fit h-fit">
 						<div style="width: {w}px; height: {h}px" class="flex justify-center items-center">
-							<img alt="passport with removed background" class="w-full h-auto" {src} />
+							<img
+								alt="passport with removed background"
+								class="w-{fit_w ? 'full' : 'auto'} h-{fit_w ? 'auto' : 'full'}"
+								{src}
+							/>
 						</div>
 					</div>
 				</div>
