@@ -6,6 +6,7 @@
 	import '../app.css';
 	import { remove_bg } from '$lib/remove_bg';
 	import Checkbox from '$lib/Checkbox.svelte';
+	import ColorInput from '$lib/ColorInput.svelte';
 
 	let src: string = 's',
 		count = 4,
@@ -92,8 +93,7 @@
 		{#if src}
 			<Button text="remove one" on:click={() => count--} />
 			<Button text="add one" on:click={() => count++} />
-			<input class="hidden" id="color" type="color" bind:value={color} />
-            <label style="background-color: {color};" for="color" class="border-[1px] border-zinc-100 inline-flex gap-x-2 items-center justify-center transition-colors focus-visible:outline-none disabled:pointer-events-none w-full max-w-full disabled:opacity-50 hover:bg-primary/90 px-4 py-2 rounded-full min-h-fit h-full">background color</label>
+			<ColorInput bind:color id="color" label="set background color" />
 
 			<!-- <Button text="Download" on:click={download} /> -->
 		{/if}
@@ -124,26 +124,25 @@
 				{/each}
 			</div>
 
-			<div class="print:hidden flex flex-col items-center gap-1">
-				<w-min><Button text="shift up" on:click={() => top--} /></w-min>
-				<div class="flex gap-1 items-stretch">
-					<div><Button text="shift left" on:click={() => left--} /></div>
-					<div><Button text="shift down" on:click={() => top++} /></div>
-					<div><Button text="shift right" on:click={() => left++} /></div>
-				</div>
-			</div>
-
-			<div class="flex gap-1">
-				<Button text="increase width" on:click={() => w++} />
-				<Button text="reduce width" on:click={() => w--} />
-			</div>
-
-			<div class="flex gap-1">
-				<Button text="increase height" on:click={() => h++} />
-				<Button text="reduce height" on:click={() => h--} />
-			</div>
-
-			<Checkbox id="fit_w" label="fit width" bind:checked={fit_w} />
+			<div class="print:hidden">
+                <div class="print:hidden flex flex-col items-center gap-1">
+                    <w-min><Button text="shift up" on:click={() => top--} /></w-min>
+                    <div class="flex gap-1 items-stretch">
+                        <div><Button text="shift left" on:click={() => left--} /></div>
+                        <div><Button text="shift down" on:click={() => top++} /></div>
+                        <div><Button text="shift right" on:click={() => left++} /></div>
+                    </div>
+                </div>
+                <div class="flex gap-1">
+                    <Button text="increase width" on:click={() => w++} />
+                    <Button text="reduce width" on:click={() => w--} />
+                </div>
+                <div class="flex gap-1">
+                    <Button text="increase height" on:click={() => h++} />
+                    <Button text="reduce height" on:click={() => h--} />
+                </div>
+                <Checkbox id="fit_w" label="fit width" bind:checked={fit_w} />
+            </div>
 		</div>
 	{/if}
 </div>
