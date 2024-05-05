@@ -5,13 +5,14 @@
 	import html2canvas from 'html2canvas';
 	import '../app.css';
 	import { remove_bg } from '$lib/remove_bg';
+	import Checkbox from '$lib/Checkbox.svelte';
 
-	let src: string = '',
+	let src: string = 's',
 		count = 4,
 		top = 0,
 		left = 0,
 		fit_w = false,
-		color = '#c32222',
+		color = '#334155',
 		w = 132.283,
 		h = 170.079,
 		el: HTMLDivElement;
@@ -81,72 +82,68 @@
 />
 
 <div class="p-4">
-    <div class="print:hidden">
-        <FileUpload
-            on:change={async ({ detail }) => {
-                src = URL.createObjectURL(new Blob([await remove_bg(detail[0])], { type: 'image/png' }));
-            }}
-        />
-    
-        {#if src}
-            <Button text="remove one" on:click={() => count--} />
-            <Button text="add one" on:click={() => count++} />
-            <input type="color" bind:value={color} />
-    
-            <!-- <Button text="Download" on:click={download} /> -->
-        {/if}
-    </div>
-    
-    {#if src}
-        <div class="flex flex-col gap-1">
-            <div
-                bind:this={el}
-                class=" flex flex-wrap justify-between w-[385.512px] h-[574.488px] items-center bg-slate-300"
-            >
-                {#each Array(count) as _}
-                    <div
-                        style="background-color: {color};"
-                        class="w-[132.283px] h-[170.079px] border-[1px] border-solid border-red-400 relative flex justify-center items-center overflow-hidden"
-                    >
-                        <div style=" top: {top}px; left: {left}px" class="relative w-fit h-fit">
-                            <div style="width: {w}px; height: {h}px" class="flex justify-center items-center">
-                                <img
-                                    alt="passport with removed background"
-                                    class="{fit_w ? 'w' : 'h'}-full object-cover"
-                                    {src}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <Passport {position} {src} /> -->
-                {/each}
-            </div>
-    
-            <div class="print:hidden flex flex-col items-center">
-                <Button text="shift up" on:click={() => top--} />
-                <div class="flex gap-1">
-                    <Button text="shift left" on:click={() => left--} />
-                    <Button text="shift down" on:click={() => top++} />
-                    <Button text="shift right" on:click={() => left++} />
-                </div>
-            </div>
-    
-            <div class="flex gap-1">
-                <Button text="increase width" on:click={() => w++} />
-                <Button text="reduce width" on:click={() => w--} />
-            </div>
-    
-            <div class="flex gap-1">
-                <Button text="increase height" on:click={() => h++} />
-                <Button text="reduce height" on:click={() => h--} />
-            </div>
-    
-            <radio>
-                <radiobutton>sf</radiobutton>
-            </radio>
-    
-            <label for="fit_w">fit width</label>
-            <input type="checkbox" name="fit_w" bind:checked={fit_w} />
-        </div>
-    {/if}
+	<div class="print:hidden flex flex-col gap-3">
+		<FileUpload
+			on:change={async ({ detail }) => {
+				src = URL.createObjectURL(new Blob([await remove_bg(detail[0])], { type: 'image/png' }));
+			}}
+		/>
+
+		{#if src}
+			<Button text="remove one" on:click={() => count--} />
+			<Button text="add one" on:click={() => count++} />
+			<input type="color" bind:value={color} />
+            ;s
+
+			<!-- <Button text="Download" on:click={download} /> -->
+		{/if}
+	</div>
+
+	{#if src}
+		<div class="flex flex-col gap-1">
+			<div
+				bind:this={el}
+				class=" flex flex-wrap justify-between w-[385.512px] h-[574.488px] items-center bg-slate-300"
+			>
+				{#each Array(count) as _}
+					<div
+						style="background-color: {color};"
+						class="w-[132.283px] h-[170.079px] border-[1px] border-solid border-red-400 relative flex justify-center items-center overflow-hidden"
+					>
+						<div style=" top: {top}px; left: {left}px" class="relative w-fit h-fit">
+							<div style="width: {w}px; height: {h}px" class="flex justify-center items-center">
+								<img
+									alt="passport with removed background"
+									class="{fit_w ? 'w' : 'h'}-full object-cover"
+									{src}
+								/>
+							</div>
+						</div>
+					</div>
+					<!-- <Passport {position} {src} /> -->
+				{/each}
+			</div>
+
+			<div class="print:hidden flex flex-col items-center gap-1">
+				<w-min><Button text="shift up" on:click={() => top--} /></w-min>
+				<div class="flex gap-1 items-stretch">
+					<div><Button text="shift left" on:click={() => left--} /></div>
+					<div><Button text="shift down" on:click={() => top++} /></div>
+					<div><Button text="shift right" on:click={() => left++} /></div>
+				</div>
+			</div>
+
+			<div class="flex gap-1">
+				<Button text="increase width" on:click={() => w++} />
+				<Button text="reduce width" on:click={() => w--} />
+			</div>
+
+			<div class="flex gap-1">
+				<Button text="increase height" on:click={() => h++} />
+				<Button text="reduce height" on:click={() => h--} />
+			</div>
+
+			<Checkbox id="fit_w" label="fit width" bind:checked={fit_w} />
+		</div>
+	{/if}
 </div>
