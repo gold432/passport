@@ -70,11 +70,11 @@
 				break;
 			case '+':
 			case 'NumpadAdd':
-				console.log('Plus key pressed');
+				w++
 				break;
 			case '-':
 			case 'NumpadSubtract':
-				console.log('Minus key pressed');
+				w--
 				break;
 		}
 	}}
