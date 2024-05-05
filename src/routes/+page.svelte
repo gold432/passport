@@ -2,7 +2,7 @@
 	import FileUpload from '$lib/FileUpload.svelte';
 	import Button from '../lib/Button/Button.svelte';
 	import Passport from '../lib/Passport.svelte';
-	import html2canvas from 'html2canvas';
+	<!-- import html2canvas from 'html2canvas'; -->
 	import '../app.css';
 	import { remove_bg } from '$lib/remove_bg';
 	import Checkbox from '$lib/Checkbox.svelte';
@@ -21,7 +21,7 @@
 	// $: position = `${left}px ${top}px`;
 	$: console.log(w);
 
-	const download = () => {
+	<!-- const download = () => {
 		// Create a canvas and set its dimensions to the element's dimensions
 		const canvas = document.createElement('canvas');
 		canvas.width = el.offsetWidth;
@@ -38,7 +38,7 @@
 		link.href = imageData;
 		link.download = 'image.png';
 		link.click();
-	};
+	}; -->
 
 	const file_to_base64 = (file: File): Promise<string | ArrayBuffer | null> => {
 		return new Promise((resolve, reject) => {
