@@ -81,7 +81,7 @@
 	}}
 />
 
-<div class="p-4">
+<div class="p-4 flex flex-col gap-3">
 	<div class="print:hidden flex flex-col gap-3">
 		<FileUpload
 			on:change={async ({ detail }) => {
@@ -92,23 +92,23 @@
 		{#if src}
 			<Button text="remove one" on:click={() => count--} />
 			<Button text="add one" on:click={() => count++} />
-			<input type="color" bind:value={color} />
-            ;s
+			<input class="hidden" id="color" type="color" bind:value={color} />
+            <label style="background-color: {color};" for="color" class="border-[1px] border-zinc-100 inline-flex gap-x-2 items-center justify-center transition-colors focus-visible:outline-none disabled:pointer-events-none w-full max-w-full disabled:opacity-50 hover:bg-primary/90 px-4 py-2 rounded-full min-h-fit h-full">background color</label>
 
 			<!-- <Button text="Download" on:click={download} /> -->
 		{/if}
 	</div>
 
 	{#if src}
-		<div class="flex flex-col gap-1">
+		<div class="flex flex-col gap-3">
 			<div
 				bind:this={el}
-				class=" flex flex-wrap justify-between w-[385.512px] h-[574.488px] items-center bg-slate-300"
+				class=" flex flex-wrap justify-between w-[385.512px] h-[574.488px] items-center bg-slate-700"
 			>
 				{#each Array(count) as _}
 					<div
 						style="background-color: {color};"
-						class="w-[132.283px] h-[170.079px] border-[1px] border-solid border-red-400 relative flex justify-center items-center overflow-hidden"
+						class="w-[132.283px] h-[170.079px] border-[1px] border-solid border-slate-100 relative flex justify-center items-center overflow-hidden"
 					>
 						<div style=" top: {top}px; left: {left}px" class="relative w-fit h-fit">
 							<div style="width: {w}px; height: {h}px" class="flex justify-center items-center">
