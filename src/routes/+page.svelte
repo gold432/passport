@@ -104,6 +104,7 @@
 		>
 			{#each Array(count) as _}
 				<div
+                    style="background-color: {color};"
 					class="w-[132.283px] h-[170.079px] border-[1px] border-solid border-red-400 relative flex justify-center items-center overflow-hidden"
 				>
 					<div style=" top: {top}px; left: {left}px" class="relative w-fit h-fit">
