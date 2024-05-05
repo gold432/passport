@@ -8,7 +8,7 @@
 	import Checkbox from '$lib/Checkbox.svelte';
 	import ColorInput from '$lib/ColorInput.svelte';
 
-	let src: string = 's',
+	let src: string = '',
 		count = 4,
 		top = 0,
 		left = 0,
@@ -85,6 +85,7 @@
 <div class="p-4 flex flex-col gap-3">
 	<div class="print:hidden flex flex-col gap-3">
 		<FileUpload
+		label={src ? "change image" : "add image"}
 			on:change={async ({ detail }) => {
 				src = URL.createObjectURL(new Blob([await remove_bg(detail[0])], { type: 'image/png' }));
 			}}
