@@ -4,7 +4,8 @@
 	import Passport from '../lib/Passport.svelte';
 	import '../app.css';
 	import { remove_bg } from '$lib/remove_bg';
-	import Checkbox from '$lib/Checkbox.svelte';
+	import Toggle from '$lib/Toggle.svelte';
+	import html2canvas from 'html2canvas';
 	import ColorInput from '$lib/ColorInput.svelte';
 
 	let src: string = '',
@@ -19,6 +20,17 @@
 
 	// $: position = `${left}px ${top}px`;
 	// $: console.log(w);
+
+	const download = () => {
+		html2canvas(document.body).then((canvas) => {
+			canvas.toBlob(function (blob) {
+				const link = document.createElement('a');
+				link.href = URL.createObjectURL(blob);
+				link.download = 'image.png';
+				link.click();
+			});
+		});
+	};
 
 	const file_to_base64 = (file: File): Promise<string | ArrayBuffer | null> => {
 		return new Promise((resolve, reject) => {
@@ -65,7 +77,7 @@
 <div class="p-4 flex flex-col gap-3">
 	<div class="print:hidden flex flex-col gap-3">
 		<FileUpload
-		label={src ? "change image" : "add image"}
+			label={src ? 'change image' : 'add image'}
 			on:change={async ({ detail }) => {
 				src = URL.createObjectURL(new Blob([await remove_bg(detail[0])], { type: 'image/png' }));
 			}}
@@ -106,24 +118,21 @@
 			</div>
 
 			<div class="print:hidden">
-                <div class="print:hidden flex flex-col items-center gap-1">
-                    <w-min><Button text="shift up" on:click={() => top--} /></w-min>
-                    <div class="flex gap-1 items-stretch">
-                        <div><Button text="shift left" on:click={() => left--} /></div>
-                        <div><Button text="shift down" on:click={() => top++} /></div>
-                        <div><Button text="shift right" on:click={() => left++} /></div>
-                    </div>
-                </div>
-                <div class="flex gap-1">
-                    <Button text="increase width" on:click={() => w++} />
-                    <Button text="reduce width" on:click={() => w--} />
-                </div>
-                <div class="flex gap-1">
-                    <Button text="increase height" on:click={() => h++} />
-                    <Button text="reduce height" on:click={() => h--} />
-                </div>
-                <Checkbox id="fit_w" label="fit width" bind:checked={fit_w} />
-            </div>
+				<div class="print:hidden flex flex-col items-center gap-1">
+					<w-min><Button text="shift up" on:click={() => top--} /></w-min>
+					<div class="flex gap-1 items-stretch">
+						<div><Button text="shift left" on:click={() => left--} /></div>
+						<div><Button text="shift down" on:click={() => top++} /></div>
+						<div><Button text="shift right" on:click={() => left++} /></div>
+					</div>
+				</div>
+				<div class="flex gap-1">
+					<Button text="reduce" on:click={() => (fit_w ? w-- : h--)} />
+					<Button text="increase" on:click={() => (fit_w ? w++ : h++)} />
+				</div>
+				<Toggle id="fit_w" label="fit width" bind:checked={fit_w} />
+				<Button on:click={download} text="download" />
+			</div>
 		</div>
 	{/if}
 </div>
