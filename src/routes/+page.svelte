@@ -22,7 +22,7 @@
 	// $: console.log(w);
 
 	const download = () => {
-		html2canvas(document.body).then((canvas) => {
+		html2canvas(el).then((canvas) => {
 			canvas.toBlob(function (blob) {
 				const link = document.createElement('a');
 				link.href = URL.createObjectURL(blob);
