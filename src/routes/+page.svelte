@@ -33,8 +33,17 @@
 				link.href = URL.createObjectURL(blob);
 				link.download = 'image.png';
 				link.click();
+				document.removeChild(link);
 			});
 		});
+	};
+
+	const download_plain = () => {
+		const link = document.createElement('a');
+		link.href = src;
+		link.download = 'plain.png';
+		link.click();
+		document.removeChild(link);
 	};
 
 	const file_to_base64 = (file: File): Promise<string | ArrayBuffer | null> => {
@@ -108,6 +117,7 @@
 			<div class="print:hidden flex flex-col gap-1">
 				<Button on:click={download} text="download" />
 				<ColorInput bind:color id="color" label="set background color" />
+				<Button on:click={download_plain} text="download plain" />
 				<div class="print:hidden flex flex-col items-center gap-1">
 					<div>
 						<Button
@@ -157,7 +167,7 @@
 				<Button text="add one" on:click={() => count++} />
 			</div>
 		</div>
-	{:else}
+	{:else if loading}
 		<p class="text-white">Loading...</p>
 	{/if}
 </div>
