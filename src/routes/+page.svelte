@@ -12,7 +12,8 @@
 		top = 0,
 		left = 0,
 		interval: number,
-		fit_w = false,
+		loading = false,
+		// fit_w = false,
 		color = '#334155',
 		w = 132.283,
 		h = 170.079,
@@ -85,18 +86,12 @@
 		<FileUpload
 			label={src ? 'change image' : 'add image'}
 			on:change={async ({ detail }) => {
+				loading = true;
 				const r = await import('@imgly/background-removal');
 				src = URL.createObjectURL(new Blob([await r.default(detail[0])], { type: 'image/png' }));
+				loading = false;
 			}}
 		/>
-
-		{#if src}
-			<Button text="remove one" on:click={() => count--} />
-			<Button text="add one" on:click={() => count++} />
-			<ColorInput bind:color id="color" label="set background color" />
-
-			<!-- <Button text="Download" on:click={download} /> -->
-		{/if}
 	</div>
 
 	{#if src}
@@ -106,34 +101,43 @@
 				class=" flex flex-wrap justify-between w-[385px] h-[574px] items-center bg-slate-700"
 			>
 				{#each Array(count) as _}
-				<Passport bind:w bind:h bind:top bind:left bind:color bind:src />
+					<Passport bind:w bind:h bind:top bind:left bind:color bind:src />
 				{/each}
 			</div>
 
 			<div class="print:hidden flex flex-col gap-1">
+				<Button on:click={download} text="download" />
+				<ColorInput bind:color id="color" label="set background color" />
 				<div class="print:hidden flex flex-col items-center gap-1">
-					<div><Button
-						text="up"
-						on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ top--, 144))}
-						on:mouseup={() => clearInterval(interval)}
-					/></div>
+					<div>
+						<Button
+							text="up"
+							on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ top--, 144))}
+							on:mouseup={() => clearInterval(interval)}
+						/>
+					</div>
 					<div class="flex gap-1 items-stretch">
-						<div><Button
-							text="left"
-							on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ left--, 144))}
-							on:mouseup={() => clearInterval(interval)}
-						/></div>
-						<div><Button
-							text="down"
-							on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ top++, 144))}
-							on:mouseup={() => clearInterval(interval)}
-						/></div>
-						<div><Button
-							text="right"
-							on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ left++, 144))}
-							on:mouseup={() => clearInterval(interval)}
-						/></div>
-						
+						<div>
+							<Button
+								text="left"
+								on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ left--, 144))}
+								on:mouseup={() => clearInterval(interval)}
+							/>
+						</div>
+						<div>
+							<Button
+								text="down"
+								on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ top++, 144))}
+								on:mouseup={() => clearInterval(interval)}
+							/>
+						</div>
+						<div>
+							<Button
+								text="right"
+								on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ left++, 144))}
+								on:mouseup={() => clearInterval(interval)}
+							/>
+						</div>
 					</div>
 				</div>
 				<div class="flex gap-1">
@@ -149,8 +153,11 @@
 					/>
 				</div>
 				<!-- <Toggle id="fit_w" label="fit width" bind:checked={fit_w} /> -->
-				<Button on:click={download} text="download" />
+				<Button text="remove one" on:click={() => count--} />
+				<Button text="add one" on:click={() => count++} />
 			</div>
 		</div>
+	{:else}
+		<p class="text-white">Loading...</p>
 	{/if}
 </div>
