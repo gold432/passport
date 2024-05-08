@@ -3,7 +3,7 @@
 	import Button from '../lib/Button/Button.svelte';
 	import Passport from '../lib/Passport.svelte';
 	import '../app.css';
-	import { remove_bg } from '$lib/remove_bg';
+import r from '@imgly/background-removal'
 	import Toggle from '$lib/Toggle.svelte';
 	import html2canvas from 'html2canvas';
 	import ColorInput from '$lib/ColorInput.svelte';
@@ -86,7 +86,7 @@
 		<FileUpload
 			label={src ? 'change image' : 'add image'}
 			on:change={async ({ detail }) => {
-				src = URL.createObjectURL(new Blob([await remove_bg(detail[0])], { type: 'image/png' }));
+				src = URL.createObjectURL(new Blob([await r(detail[0])], { type: 'image/png' }));
 			}}
 		/>
 

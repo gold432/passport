@@ -40,6 +40,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@imgly/background-removal": "^1.4.5",
 		"axios": "^1.6.8",
 		"cheerio": "^1.0.0-rc.12",
 		"hammerjs": "^2.0.8",
