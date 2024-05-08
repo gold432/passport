@@ -11,6 +11,8 @@
 {#if href}
 	<a
 		on:click
+		on:mousedown
+		on:mouseup
 		{href}
 		class="inline-flex gap-x-2 items-center justify-center transition-colors focus-visible:outline-none disabled:pointer-events-none w-full max-w-full disabled:opacity-50 hover:bg-primary/90 {bg}  px-4 py-2 rounded-full min-h-fit h-full {classes}"
 		>{#if text}
@@ -22,6 +24,8 @@
 {:else}
 	<button
 		on:click
+		on:mousedown
+		on:mouseup
 		{disabled}
 		{type}
 		class="inline-flex gap-x-2 items-center justify-center transition-colors focus-visible:outline-none disabled:pointer-events-none w-full max-w-full disabled:opacity-50 hover:bg-primary/90 {bg}  px-4 py-2 rounded-full min-h-fit h-full {classes}"

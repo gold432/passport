@@ -12,6 +12,7 @@
 		count = 4,
 		top = 0,
 		left = 0,
+		interval: number,
 		fit_w = false,
 		color = '#334155',
 		w = 132.283,
@@ -25,6 +26,10 @@
 		html2canvas(el).then((canvas) => {
 			canvas.toBlob(function (blob) {
 				const link = document.createElement('a');
+				if (!blob) {
+					alert('an error occured');
+					return;
+				}
 				link.href = URL.createObjectURL(blob);
 				link.download = 'image.png';
 				link.click();
@@ -64,11 +69,13 @@
 				break;
 			case '+':
 			case 'NumpadAdd':
-				e.shiftKey ? w++ : h++;
+				w++;
+				// e.shiftKey ? w++ : h++;
 				break;
 			case '-':
 			case 'NumpadSubtract':
-				e.shiftKey ? w-- : h--;
+				w--;
+				// e.shiftKey ? w-- : h--;
 				break;
 		}
 	}}
@@ -96,41 +103,52 @@
 		<div class="flex flex-col gap-3">
 			<div
 				bind:this={el}
-				class=" flex flex-wrap justify-between w-[385.512px] h-[574.488px] items-center bg-slate-700"
+				class=" flex flex-wrap justify-between w-[385px] h-[574px] items-center bg-slate-700"
 			>
 				{#each Array(count) as _}
-					<div
-						style="background-color: {color};"
-						class="w-[132.283px] h-[170.079px] border-[1px] border-solid border-slate-100 relative flex justify-center items-center overflow-hidden"
-					>
-						<div style=" top: {top}px; left: {left}px" class="relative w-fit h-fit">
-							<div style="width: {w}px; height: {h}px" class="flex justify-center items-center">
-								<img
-									alt="passport with removed background"
-									class="{fit_w ? 'w' : 'h'}-full object-cover"
-									{src}
-								/>
-							</div>
-						</div>
-					</div>
-					<!-- <Passport {position} {src} /> -->
+				<Passport bind:w bind:h bind:top bind:left bind:color bind:src />
 				{/each}
 			</div>
 
 			<div class="print:hidden">
 				<div class="print:hidden flex flex-col items-center gap-1">
-					<w-min><Button text="shift up" on:click={() => top--} /></w-min>
+					<div><Button
+						text="up"
+						on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ top--, 144))}
+						on:mouseup={() => clearInterval(interval)}
+					/></div>
 					<div class="flex gap-1 items-stretch">
-						<div><Button text="shift left" on:click={() => left--} /></div>
-						<div><Button text="shift down" on:click={() => top++} /></div>
-						<div><Button text="shift right" on:click={() => left++} /></div>
+						<div><Button
+							text="left"
+							on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ left--, 144))}
+							on:mouseup={() => clearInterval(interval)}
+						/></div>
+						<div><Button
+							text="down"
+							on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ top++, 144))}
+							on:mouseup={() => clearInterval(interval)}
+						/></div>
+						<div><Button
+							text="right"
+							on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ left++, 144))}
+							on:mouseup={() => clearInterval(interval)}
+						/></div>
+						
 					</div>
 				</div>
 				<div class="flex gap-1">
-					<Button text="reduce" on:click={() => (fit_w ? w-- : h--)} />
-					<Button text="increase" on:click={() => (fit_w ? w++ : h++)} />
+					<Button
+						text="reduce"
+						on:mousedown={() => (interval = setInterval(() => /*fit_w ? w-- : */ w--, 144))}
+						on:mouseup={() => clearInterval(interval)}
+					/>
+					<Button
+						text="increase"
+						on:mousedown={() => (interval = setInterval(() => /*fit_w ? w++ : */ w++, 144))}
+						on:mouseup={() => clearInterval(interval)}
+					/>
 				</div>
-				<Toggle id="fit_w" label="fit width" bind:checked={fit_w} />
+				<!-- <Toggle id="fit_w" label="fit width" bind:checked={fit_w} /> -->
 				<Button on:click={download} text="download" />
 			</div>
 		</div>

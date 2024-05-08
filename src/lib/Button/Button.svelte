@@ -9,4 +9,4 @@
 		type: 'button' | 'submit' | 'reset' | null | undefined = undefined;
 </script>
 
-<Base on:click {disabled} {icon} {type} {href} {text} bg="bg-slate-300" />
+<Base on:mousedown on:mouseup on:click {disabled} {icon} {type} {href} {text} bg="bg-slate-300" />
