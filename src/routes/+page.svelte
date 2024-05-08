@@ -3,7 +3,6 @@
 	import Button from '../lib/Button/Button.svelte';
 	import Passport from '../lib/Passport.svelte';
 	import '../app.css';
-import r from '@imgly/background-removal'
 	import Toggle from '$lib/Toggle.svelte';
 	import html2canvas from 'html2canvas';
 	import ColorInput from '$lib/ColorInput.svelte';
@@ -86,7 +85,8 @@ import r from '@imgly/background-removal'
 		<FileUpload
 			label={src ? 'change image' : 'add image'}
 			on:change={async ({ detail }) => {
-				src = URL.createObjectURL(new Blob([await r(detail[0])], { type: 'image/png' }));
+				const r = await import('@imgly/background-removal');
+				src = URL.createObjectURL(new Blob([await r.default(detail[0])], { type: 'image/png' }));
 			}}
 		/>
 
@@ -110,7 +110,7 @@ import r from '@imgly/background-removal'
 				{/each}
 			</div>
 
-			<div class="print:hidden">
+			<div class="print:hidden flex flex-col gap-1">
 				<div class="print:hidden flex flex-col items-center gap-1">
 					<div><Button
 						text="up"
