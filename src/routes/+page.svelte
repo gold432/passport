@@ -15,8 +15,8 @@
 		loading = false,
 		// fit_w = false,
 		color = '#334155',
-		w = 132.283,
-		h = 170.079,
+		w = 1320.283,
+		h = 1700.079,
 		el: HTMLDivElement;
 
 	// $: position = `${left}px ${top}px`;
@@ -65,24 +65,30 @@
 	on:keydown={(e) => {
 		switch (e.key) {
 			case 'ArrowUp':
+				e.preventDefault()
 				top--;
 				break;
 			case 'ArrowDown':
+				e.preventDefault()
 				top++;
 				break;
 			case 'ArrowLeft':
+				e.preventDefault()
 				left--;
 				break;
 			case 'ArrowRight':
+				e.preventDefault()
 				left++;
 				break;
 			case '+':
 			case 'NumpadAdd':
+				e.preventDefault()
 				w++;
 				// e.shiftKey ? w++ : h++;
 				break;
 			case '-':
 			case 'NumpadSubtract':
+				e.preventDefault()
 				w--;
 				// e.shiftKey ? w-- : h--;
 				break;
@@ -96,18 +102,22 @@
 			label={src ? 'change image' : 'add image'}
 			on:change={async ({ detail }) => {
 				loading = true;
-				const r = await import('@imgly/background-removal');
-				src = URL.createObjectURL(new Blob([await r.default(detail[0])], { type: 'image/png' }));
+				try{const r = await import('@imgly/background-removal');
+				src = URL.createObjectURL(new Blob([await r.default(detail[0])], { type: 'image/png' }));} catch (e) {
+					console.error('rm error', e)
+					alert(`rm error: ${e}`)
+				}
 				loading = false;
 			}}
 		/>
 	</div>
 
+	<!-- {#if true} -->
 	{#if src}
 		<div class="flex flex-col gap-3">
 			<div
 				bind:this={el}
-				class=" flex flex-wrap justify-between w-[385px] h-[574px] items-center bg-slate-700"
+				class=" flex flex-wrap content-start h-[3850px] w-[5740px] bg-slate-700"
 			>
 				{#each Array(count) as _}
 					<Passport bind:w bind:h bind:top bind:left bind:color bind:src />

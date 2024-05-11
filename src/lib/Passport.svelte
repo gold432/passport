@@ -40,7 +40,7 @@
 <div
 	bind:this={el}
 	style="background-color: {color};"
-	class="w-[132.283px] h-[170.079px] border-[1px] border-solid border-slate-100 relative flex justify-center items-center overflow-hidden"
+	class="w-[1320.283px] h-[1700.079px] border-[1px] border-solid border-slate-100 relative flex justify-center items-center overflow-hidden"
 >
 	<div style=" top: {top}px; left: {left}px" class="relative w-fit h-fit">
 		<div style="width: {w}px; height: {h}px" class="flex justify-center items-center">
