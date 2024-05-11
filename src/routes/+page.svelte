@@ -17,7 +17,8 @@
 		color = '#334155',
 		w = 1320.283,
 		h = 1700.079,
-		el: HTMLDivElement;
+		el: HTMLDivElement,
+		single: HTMLDivElement;
 
 	// $: position = `${left}px ${top}px`;
 	// $: console.log(w);
@@ -38,7 +39,23 @@
 		});
 	};
 
-	const download_plain = () => {
+	const download_single = () => {
+		html2canvas(single).then((canvas) => {
+			canvas.toBlob(function (blob) {
+				const link = document.createElement('a');
+				if (!blob) {
+					alert('an error occured');
+					return;
+				}
+				link.href = URL.createObjectURL(blob);
+				link.download = 'image.png';
+				link.click();
+				document.removeChild(link);
+			});
+		});
+	};
+
+	const download_single_without_background = () => {
 		const link = document.createElement('a');
 		link.href = src;
 		link.download = 'plain.png';
@@ -119,7 +136,8 @@
 				bind:this={el}
 				class=" flex flex-wrap content-start h-[3850px] w-[5740px] bg-slate-700"
 			>
-				{#each Array(count) as _}
+					<Passport bind:el={single} bind:w bind:h bind:top bind:left bind:color bind:src />
+					{#each Array(count-1) as _}
 					<Passport bind:w bind:h bind:top bind:left bind:color bind:src />
 				{/each}
 			</div>
@@ -127,7 +145,8 @@
 			<div class="print:hidden flex flex-col gap-1">
 				<Button on:click={download} text="download" />
 				<ColorInput bind:color id="color" label="set background color" />
-				<Button on:click={download_plain} text="download plain" />
+				<Button on:click={download_single} text="download single" />
+				<Button on:click={download_single_without_background} text="download single without background" />
 				<div class="print:hidden flex flex-col items-center gap-1">
 					<div>
 						<Button

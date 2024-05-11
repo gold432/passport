@@ -4,13 +4,13 @@
 		h: number,
 		top: number,
 		left: number,
-		color: string; let
-		el: HTMLDivElement;
+		color: string,
+		el: HTMLDivElement | undefined = undefined;
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
 		const Hammer = await import('hammerjs');
-		const hammer = new Hammer.default(el);
+		const hammer = new Hammer.default(el as HTMLDivElement);
 		hammer.get('pinch').set({ enable: true });
 		hammer.get('rotate').set({ enable: true });
 		hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
